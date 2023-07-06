@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 958541217687767853}
   - component: {fileID: 958541217687767852}
   - component: {fileID: 958541217687767855}
+  - component: {fileID: 2484503238683033622}
   - component: {fileID: 958541217687767851}
   - component: {fileID: 958541217687767848}
   - component: {fileID: 4228982792853092661}
@@ -134,6 +135,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &2484503238683033622
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 958541217687767854}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.01, y: 1.01, z: 1.01}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &958541217687767851
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -165,12 +179,16 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
-  rb: {fileID: 958541217687767851}
-  manager: {fileID: 0}
+  uiManager: {fileID: 0}
+  gameManager: {fileID: 0}
   username: 
+  speedY: 0
   sila: 5
   silaSkoku: 500
   jumpAmount: 4
+  maxJumpAmount: 0
+  inJump: 0
+  lastJumped: 0
 --- !u!114 &4228982792853092661
 MonoBehaviour:
   m_ObjectHideFlags: 0

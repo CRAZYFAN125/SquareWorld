@@ -18,6 +18,10 @@ public class GraczSterowanie : NetworkBehaviour
     public bool inJump = false;
     [HideInInspector]
     public int lastJumped = 0;
+    [SerializeField]
+    private float invincibility = 2.5f;
+private float maxInvincibility = 2.5f;
+
 
     private void Start()
     {
@@ -39,6 +43,7 @@ public class GraczSterowanie : NetworkBehaviour
             gameManager = FindObjectOfType<GameManager>(true);
             jumpAmount += 2;
             maxJumpAmount = jumpAmount;
+            maxInvincibility = invincibility;
             rb = GetComponent<Rigidbody>();
         }
     }
@@ -73,7 +78,7 @@ public class GraczSterowanie : NetworkBehaviour
             {
                 if (!inJump) lastJumped = 0;
                 rb.AddForce(new Vector3(0, silaSkoku, 0));
-                    jumpAmount -= 1;
+                jumpAmount -= 1;
                 lastJumped += 1;
                 inJump = true;
             }
@@ -93,6 +98,11 @@ public class GraczSterowanie : NetworkBehaviour
             rb.position = Vector3.zero;
             rb.velocity = Vector3.zero;
         }
+
+        if (invincibility>0)
+        {
+            invincibility -= Time.fixedDeltaTime;
+        }
     }
 
     [ClientRpc]
@@ -111,6 +121,54 @@ public class GraczSterowanie : NetworkBehaviour
         base.OnStopClient();
 
         Application.Quit();
+    }
+
+    [ClientRpc]
+    internal void Move(GameObject[] players, GameObject playerToMove, Vector3 location, Particle useParticle)
+    {
+        foreach (GameObject player in players)
+        {
+            if (playerToMove == player)
+            {
+                GameObject particle;
+                switch (useParticle)
+                {
+                    case Particle.none:
+                        break;
+                    case Particle.death:
+                        if (gameManager.TryGetParticleByName("Death", out particle))
+                            Instantiate(particle, player.transform.position, Quaternion.identity);
+                        break;
+                    case Particle.teleport:
+                        if (gameManager.TryGetParticleByName("Teleport", out particle))
+                        {
+                            Instantiate(particle, transform.position, Quaternion.identity);
+                            Instantiate(particle, location, Quaternion.identity);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                player.transform.position = location;
+                if(isLocalPlayer)
+                {
+                    rb.velocity = Vector3.zero;
+                }
+            }
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("Spike")&&invincibility<=0)
+        {
+            if (isLocalPlayer)
+            {
+                invincibility = maxInvincibility;
+                gameManager.MovePlayer(gameObject, new Vector3(0, 1, 0), Particle.death);
+                inJump = false;
+            }
+        }
     }
 }
 

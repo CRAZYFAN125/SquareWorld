@@ -2,22 +2,46 @@ using Mirror;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.VFX;
 
 public class GameManager : NetworkBehaviour
 {
+    [System.Serializable]
+    public class SpawnParticles
+    {
+        public string name;
+        public GameObject Prefab;
+    }
+
+    public static GameManager Instance { private set; get; }
     public Mirror.NetworkManager networkManager;
     List<GameObject> players = new();
     public Text More;
     public float JumpOutMulti = 2.5f;
     public GameObject bubble;
+    public SpawnParticles[] spawnParticles;
 
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+            Destroy(this);
+    }
     private void Start()
     {
         if (networkManager == null)
         {
             networkManager = FindObjectOfType<Mirror.NetworkManager>();
         }
+        MapGenerator.OnMapReady += LockPlayers;
+    }
+    public void LockPlayers()
+    {
+        players.Clear();
+        players.AddRange(GameObject.FindGameObjectsWithTag("Player"));
+
     }
     public override void OnStartClient()
     {
@@ -26,11 +50,6 @@ public class GameManager : NetworkBehaviour
         {
             NetworkManager x = GetComponent<NetworkManager>();
             x.OnStopClient();
-        }
-        else
-        {
-            players.Clear();
-            players.AddRange(GameObject.FindGameObjectsWithTag("Player"));
         }
     }
 
@@ -63,24 +82,24 @@ public class GameManager : NetworkBehaviour
             string text = $"{nameUpper} - {max}m";
 
             Highscore(text);
-
-
-        }
-
-        #region Buble Creation
-        foreach (var item in FindObjectsOfType<GraczSterowanie>())
-        {
-            if (item.speedY == 0)
-                if (item.inJump)
-                {
-                    if (item.lastJumped > 0)
+            #region Buble Creation
+            foreach (var item in FindObjectsOfType<GraczSterowanie>())
+            {
+                if (item.speedY == 0)
+                    if (item.inJump)
                     {
-                        SpawnBuble(item, item.transform.position, item.lastJumped);
-                        item.inJump = false;
+                        if (item.lastJumped > 0)
+                        {
+                            SpawnBuble(item, item.transform.position, item.lastJumped);
+                            item.inJump = false;
+                        }
                     }
-                }
+            }
+            #endregion
+
         }
-        #endregion
+
+
 
     }
 
@@ -95,15 +114,22 @@ public class GameManager : NetworkBehaviour
     [ServerCallback]
     public void SpawnBuble(GraczSterowanie gracz, Vector3 position, int jumpsRemening)
     {
-        
+
         foreach (var item in FindObjectsOfType<GraczSterowanie>())
         {
-                item.JumpOff(position, jumpsRemening * JumpOutMulti, item == gracz);
+            item.JumpOff(position, jumpsRemening * JumpOutMulti, item == gracz);
         }
         print($"{position}, {jumpsRemening * JumpOutMulti}");
     }
 
-
+    [ServerCallback]
+    public void MovePlayer(GameObject playerToMove, Vector3 location, Particle useParticle = Particle.none)
+    {
+        foreach (var item in players)
+        {
+            item.GetComponent<GraczSterowanie>().Move(players.ToArray(), playerToMove, location, useParticle);
+        }
+    }
     private void OnApplicationQuit()
     {
         if (isServer && isClient)
@@ -113,4 +139,26 @@ public class GameManager : NetworkBehaviour
         else if (isClientOnly)
             networkManager.StopClient();
     }
+
+    public bool TryGetParticleByName(string particleName, out GameObject particle)
+    {
+        particle = null;
+        foreach (var item in spawnParticles)
+        {
+            if (item.name == particleName)
+            {
+                particle = item.Prefab;
+                return true;
+            }
+        }
+        Debug.LogWarning("Particle " + particleName + " not found!");
+        return false;
+    }
+}
+
+public enum Particle
+{
+    none,
+    death,
+    teleport
 }
