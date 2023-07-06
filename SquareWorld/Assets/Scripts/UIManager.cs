@@ -1,4 +1,5 @@
 using Mirror;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,30 +9,30 @@ public class UIManager : MonoBehaviour
 {
     public Mirror.NetworkManager networkManager;
 
-    public InputField inputField;
+    public InputField ip;
+    public InputField username;
     public Button Generate;
     public Camera startCamera;
 
     public void Connect()
     {
-        if (!string.IsNullOrEmpty(inputField.text))
+        if (!string.IsNullOrEmpty(ip.text))
         {
-            networkManager.networkAddress = inputField.text;
+            networkManager.networkAddress = ip.text;
             networkManager.StartClient();
         }
         else
         {
             networkManager.StartClient();
         }
-        startCamera.gameObject.SetActive(false);
-        gameObject.SetActive(false);
+        Ender();
     }
 
     public void Host()
     {
-        if (!string.IsNullOrEmpty(inputField.text))
+        if (!string.IsNullOrEmpty(ip.text))
         {
-            networkManager.networkAddress = inputField.text;
+            networkManager.networkAddress = ip.text;
             networkManager.StartHost();
         }
         else
@@ -39,11 +40,21 @@ public class UIManager : MonoBehaviour
             networkManager.StartHost();
         }
         Generate.gameObject.SetActive(true);
+        Ender();
+    }
+
+    public void Ender()
+    {
         startCamera.gameObject.SetActive(false);
         gameObject.SetActive(false);
     }
     public void Lock()
     {
         Generate.gameObject.SetActive(false);
+    }
+
+    public string GetUsername()
+    {
+        return username.text;
     }
 }

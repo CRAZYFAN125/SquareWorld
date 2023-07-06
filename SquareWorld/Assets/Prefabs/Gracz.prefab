@@ -49,7 +49,7 @@ GameObject:
   - component: {fileID: 2952022770280590041}
   m_Layer: 0
   m_Name: Gracz
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -166,6 +166,8 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   rb: {fileID: 958541217687767851}
+  manager: {fileID: 0}
+  username: 
   sila: 5
   silaSkoku: 500
   jumpAmount: 4
@@ -198,7 +200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83392ae5c1b731446909f252fd494ae4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncDirection: 0
+  syncDirection: 1
   syncMode: 0
   syncInterval: 0.1
   target: {fileID: 958541217687767851}

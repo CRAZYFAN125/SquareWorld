@@ -9,6 +9,7 @@ public class MapGenerator : NetworkBehaviour
     public GameObject Przeszkoda;
     public Vector3[] points;
     public GameObject Panel;
+    public static bool ready = false;
 
     private void Start()
     {
@@ -36,7 +37,7 @@ public class MapGenerator : NetworkBehaviour
             for (int i = 0; i < przeszkody; i++)
             {
                 float x = Random.Range(-20, 20);
-                float y = 1;
+                float y;
                 if (i != 0)
                     y = Random.Range(.5f, 1 + i / 3);
                 else
@@ -44,6 +45,8 @@ public class MapGenerator : NetworkBehaviour
                 float z = Random.Range(-20, 20);
                 points[i] = new Vector3(x, y, z);
                 SetPointsRPC(points);
+
+                ready = true;
             }
         }
         //if (isClient)
