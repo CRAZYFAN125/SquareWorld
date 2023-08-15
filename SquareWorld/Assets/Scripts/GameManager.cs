@@ -53,6 +53,7 @@ public class GameManager : NetworkBehaviour
         }
     }
 
+
     void Update()
     {
         if (Input.GetKeyUp(KeyCode.Escape))
@@ -114,12 +115,18 @@ public class GameManager : NetworkBehaviour
     [ServerCallback]
     public void SpawnBuble(GraczSterowanie gracz, Vector3 position, int jumpsRemening)
     {
-
-        foreach (var item in FindObjectsOfType<GraczSterowanie>())
+        try
         {
-            item.JumpOff(position, jumpsRemening * JumpOutMulti, item == gracz);
+            foreach (var item in FindObjectsOfType<GraczSterowanie>())
+            {
+                item.JumpOff(position, jumpsRemening * JumpOutMulti, item == gracz);
+            }
+            print($"{position}, {jumpsRemening * JumpOutMulti}");
         }
-        print($"{position}, {jumpsRemening * JumpOutMulti}");
+        catch(System.Exception ex)
+        {
+            Debug.LogWarning($"{ex.Message}\n\n{ex.InnerException}\n\n{ex.Source}\n\n{ex}");
+        }
     }
 
     [ServerCallback]

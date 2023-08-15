@@ -1515,6 +1515,7 @@ GameObject:
   - component: {fileID: 1469990138}
   - component: {fileID: 1469990137}
   - component: {fileID: 1469990140}
+  - component: {fileID: 1469990141}
   m_Layer: 0
   m_Name: Generator
   m_TagString: Untagged
@@ -1600,6 +1601,22 @@ MonoBehaviour:
     Prefab: {fileID: 8186153464485718113, guid: c8c6a4b0a2c2b4f47a60de597a67842a, type: 3}
   - name: Teleport
     Prefab: {fileID: 2602193257396458701, guid: 2a1172e45755fff4499dae361d608ae8, type: 3}
+--- !u!114 &1469990141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1469990136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f850ca13513cbd4cb51f6893f5b95b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0.1
+  networkManager: {fileID: 911953664}
 --- !u!1 &1488150877
 GameObject:
   m_ObjectHideFlags: 0
