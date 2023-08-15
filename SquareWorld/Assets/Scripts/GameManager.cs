@@ -97,6 +97,7 @@ public class GameManager : NetworkBehaviour
     public void SpawnBuble(GraczSterowanie gracz, Vector3 position, int jumpsRemening)
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
         try
         {
             foreach (var item in FindObjectsOfType<GraczSterowanie>())
@@ -109,10 +110,15 @@ public class GameManager : NetworkBehaviour
         {
             Debug.LogWarning($"{ex.Message}\n\n{ex.InnerException}\n\n{ex.Source}\n\n{ex}");
 =======
+=======
+>>>>>>> parent of 041a6a2 (Second pre-Update for 0.2.0)
         
         foreach (var item in FindObjectsOfType<GraczSterowanie>())
         {
                 item.JumpOff(position, jumpsRemening * JumpOutMulti, item == gracz);
+<<<<<<< HEAD
+>>>>>>> parent of 041a6a2 (Second pre-Update for 0.2.0)
+=======
 >>>>>>> parent of 041a6a2 (Second pre-Update for 0.2.0)
         }
     }

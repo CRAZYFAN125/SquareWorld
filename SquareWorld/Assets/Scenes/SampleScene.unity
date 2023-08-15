@@ -1595,6 +1595,7 @@ MonoBehaviour:
   JumpOutMulti: 2.5
   bubble: {fileID: 3183053973150068412, guid: d3c24c4d440d00f4fb3f3aad00990ce0, type: 3}
 <<<<<<< HEAD
+<<<<<<< HEAD
   spawnParticles:
   - name: Death
     Prefab: {fileID: 8186153464485718113, guid: c8c6a4b0a2c2b4f47a60de597a67842a, type: 3}
@@ -1616,6 +1617,8 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   networkManager: {fileID: 911953664}
+=======
+>>>>>>> parent of 041a6a2 (Second pre-Update for 0.2.0)
 =======
 >>>>>>> parent of 041a6a2 (Second pre-Update for 0.2.0)
 --- !u!1 &1488150877
