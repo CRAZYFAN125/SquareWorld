@@ -1540,9 +1540,7 @@ MonoBehaviour:
   syncInterval: 0.1
   ServerOnStart: 0
   przeszkody: 200
-  radiusBlock: 3
   Przeszkoda: {fileID: 6000524539049898204, guid: 3c383c92b7c0ef4489facc7c4ea43c44, type: 3}
-  Kolce: {fileID: 6314949536957320091, guid: 01243cb2fad84ce4a9907297792874be, type: 3}
   points: []
   Panel: {fileID: 567141355}
 --- !u!114 &1469990138
@@ -1596,6 +1594,7 @@ MonoBehaviour:
   More: {fileID: 1818178041}
   JumpOutMulti: 2.5
   bubble: {fileID: 3183053973150068412, guid: d3c24c4d440d00f4fb3f3aad00990ce0, type: 3}
+<<<<<<< HEAD
   spawnParticles:
   - name: Death
     Prefab: {fileID: 8186153464485718113, guid: c8c6a4b0a2c2b4f47a60de597a67842a, type: 3}
@@ -1617,6 +1616,8 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   networkManager: {fileID: 911953664}
+=======
+>>>>>>> parent of 041a6a2 (Second pre-Update for 0.2.0)
 --- !u!1 &1488150877
 GameObject:
   m_ObjectHideFlags: 0
